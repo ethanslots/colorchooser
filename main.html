@@ -1,0 +1,78 @@
+document.write('<center><h1 id="h1element"></h1></center>');
+// Function that gives you a random number
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+// Generates an hexadecimal color like "#45FF04"
+function generateColor() {
+  const arr = [
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+  ];
+
+  let color = '#';
+
+  for (let i = 0; i < 6; i += 1) {
+    color = `${color}${arr[getRandomInt(arr.length - 1)]}`;
+  }
+
+  return color;
+}
+
+// Change i to go slower
+const i = 2.5;
+
+let timeToWaitForAChange = 50;
+
+// Change increasingSpeed to makes more time to display all colors
+let increasingSpeed = 50;
+let nbColorChange = 0;
+
+// How many colors you want to display ?
+const maxNbColorChange = 20;
+
+
+// Ex: If you want all 50 colors to be played very fast, use :
+// i = 1
+// inscreasingSpeed = 1
+
+// Perform a color change and trigger the next one using setTimeout
+function changeTheColor() {
+  // Get the new color to apply
+  const color = generateColor();
+
+  // Apply the color
+  document.getElementById('h1element').innerHTML = color;
+  document.body.style.backgroundColor = color;
+
+  // Decide the next delay to change the color
+  timeToWaitForAChange += increasingSpeed;
+
+  nbColorChange += 1;
+
+  increasingSpeed = (nbColorChange * i);
+
+  if (nbColorChange >= maxNbColorChange) {
+    // It was the last stop
+    return;
+  }
+
+  setTimeout(() => changeTheColor(), timeToWaitForAChange);
+}
+
+changeTheColor();
